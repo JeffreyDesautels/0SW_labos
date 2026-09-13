@@ -6,13 +6,13 @@ class Mover {
   color fillColor = color(0);      // Couleur de remplissage (Fill color)
   color strokeColor = color(255);  // Couleur du contour (Stroke color)
   float strokeWeight = 1;          // Épaisseur du contour (Stroke weight)
+  
+  int previousTime = 0;
 
   int diameter = 20;
   int radius = diameter / 2;
 
   float activationDistance;
-  float deactivationDistance;
-
 
   Mover() {
     location = new PVector(0 + radius, height - radius);
@@ -34,10 +34,6 @@ class Mover {
     if (tempLoc.x + diameter / 2 > width || tempLoc.x - diameter / 2 < 0) {
       velocity.x *= -1;
     }
-
-    if (tempLoc.y + diameter / 2 > height || tempLoc.y - diameter / 2 < 0) {
-      velocity.y *= -1;
-    }
   }
 
   void update(int deltaTime) {
@@ -46,8 +42,12 @@ class Mover {
     if (keyPressed) {
       if (key == 'a' || key == 'A') velocity.x -= 3;
       else if (key == 'd' || key == 'D') velocity.x += 3;
+
+      // pour changer la distance d'attraction 
+      if (key == 'k' || key == 'K') setDistance(activationDistance + 1);
+      else if (key == 'l' || key == 'L') setDistance(activationDistance - 1);
     }
-    
+
     checkEdge();
 
     location.add(velocity); // Déplacement de l'objet
@@ -55,10 +55,23 @@ class Mover {
   }
 
   void display() {
+    // pour visuel sur champ attraction
+    fill(255); 
+    stroke(0);
+    ellipse(location.x, location.y, activationDistance * 2, activationDistance * 2);
+    
     stroke(strokeColor);
     fill(fillColor);
     strokeWeight(strokeWeight);
 
     ellipse(location.x, location.y, diameter, diameter);
+  }
+  
+  float getDistance() {
+    return activationDistance;
+  }
+
+  void setDistance(float activationDistance) {
+    this.activationDistance = activationDistance;
   }
 }

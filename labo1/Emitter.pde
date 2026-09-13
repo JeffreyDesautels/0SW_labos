@@ -13,13 +13,15 @@ class Emitter {
     this.maxParticles = maxParticles;
   }
 
-  void update(int deltaTime) {
+  void update(int deltaTime, PVector moverPos, float activationDistance) {
     if (millis() - lastParticleTime > particleRate && particles.size() < maxParticles) {
       lastParticleTime = millis();
       particles.add(new Particle(position));
     }
 
     for (Particle p : particles) {
+      //p.attract(moverPos, activationDistance);
+      p.attractMagnitude(moverPos, activationDistance);
       p.update(deltaTime, position);
     }
   }

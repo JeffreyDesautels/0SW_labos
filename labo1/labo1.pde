@@ -11,7 +11,7 @@ void setup() {
   mover = new Mover();
   mover.setDistance(100);
   
-  emitter = new Emitter(new PVector(width / 2, height * 0.75), 10, 1000);
+  emitter = new Emitter(new PVector(width / 2, height / 4), 10, 1000);
 }
 
 void draw() {

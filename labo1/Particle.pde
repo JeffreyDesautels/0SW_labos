@@ -84,6 +84,7 @@ class Particle {
     float distance = force.mag();
     
     if (distance <= activationDistance) {
+      // pMass * mMass
       float magnitude = (1 * 2500) / (distance * distance);
 
       force.setMag(magnitude);

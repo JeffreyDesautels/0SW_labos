@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://ti70ytyp8dt6"]
+
+[ext_resource type="Texture2D" uid="uid://cpvia5a7lrl2g" path="res://assets/sprites/platforms.png" id="1_2j53n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0qyls"]
+size = Vector2(32, 10)
+
+[sub_resource type="Animation" id="Animation_2j53n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatableBody2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2pq0l"]
+resource_name = "move"
+length = 3.0000000000000004
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatableBody2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(100, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nbrat"]
+_data = {
+&"RESET": SubResource("Animation_2j53n"),
+&"move": SubResource("Animation_2pq0l")
+}
+
+[node name="PlateformeMobile" type="Node2D" unique_id=221568111]
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=469182070]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D" unique_id=1945147658]
+shape = SubResource("RectangleShape2D_0qyls")
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D" unique_id=743943170]
+texture = ExtResource("1_2j53n")
+region_enabled = true
+region_rect = Rect2(16, 0, 32, 9)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1582503944]
+libraries/ = SubResource("AnimationLibrary_nbrat")
+autoplay = &"move"

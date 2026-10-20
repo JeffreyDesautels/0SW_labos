@@ -69,7 +69,7 @@ class Particle {
       PVector force = PVector.sub(moverPos, position);
 
       force.normalize();
-      force.mult(1);
+      //force.mult(1);
 
       applyForce(force);
 
@@ -81,11 +81,13 @@ class Particle {
 
   void attractMagnitude(PVector moverPos, float activationDistance) {
     PVector force = PVector.sub(moverPos, position);
+      //PVector force = PVector.sub(position, moverPos);
+
     float distance = force.mag();
     
     if (distance <= activationDistance) {
       // pMass * mMass
-      float magnitude = (1 * 2500) / (distance * distance);
+      float magnitude = (1 * 5000) / (distance * distance);
 
       force.setMag(magnitude);
 

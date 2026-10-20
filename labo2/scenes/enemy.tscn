@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://mq7sepvtws3r"]
+
+[ext_resource type="Script" uid="uid://blhjdd61flu7b" path="res://scripts/enemy.gd" id="1_4ra3w"]
+[ext_resource type="Texture2D" uid="uid://ctayqtx05rsym" path="res://assets/sprites/slime_green.png" id="1_md0e3"]
+[ext_resource type="PackedScene" uid="uid://bmoiyoc8o6jd5" path="res://scenes/kill_zone.tscn" id="2_4ra3w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iifgy"]
+atlas = ExtResource("1_md0e3")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epg4t"]
+atlas = ExtResource("1_md0e3")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3yqyl"]
+atlas = ExtResource("1_md0e3")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wujgv"]
+atlas = ExtResource("1_md0e3")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0qyls"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iifgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epg4t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yqyl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wujgv")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gq5t2"]
+size = Vector2(10, 12)
+
+[node name="Enemy" type="Node2D" unique_id=1842872950]
+script = ExtResource("1_4ra3w")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=11179796]
+sprite_frames = SubResource("SpriteFrames_0qyls")
+frame_progress = 0.7196366
+
+[node name="KillZone" parent="." unique_id=1091215139 instance=ExtResource("2_4ra3w")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=1516225494]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_gq5t2")
+
+[node name="DetecteurMur" type="RayCast2D" parent="." unique_id=1355825526]
+position = Vector2(0, 3)
+target_position = Vector2(13, 0)
+
+[node name="DetecteurPlancher" type="RayCast2D" parent="." unique_id=1260932585]
+target_position = Vector2(9, 13)
+
+[node name="DetecteurJoueur" type="RayCast2D" parent="." unique_id=1640393968]
+position = Vector2(0, 5)
+target_position = Vector2(39, 0)
+collision_mask = 2

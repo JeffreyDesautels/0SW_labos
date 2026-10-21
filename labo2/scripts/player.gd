@@ -1,13 +1,14 @@
 extends CharacterBody2D
 
-enum State { STATE_JUMPING, STATE_IDLE, STATE_RUNNING, STATE_FALLING }
+enum State { STATE_JUMPING, STATE_IDLE, STATE_RUNNING, STATE_FALLING, STATE_ATTACK }
 var current_state: State = State.STATE_IDLE
 
 const SPEED = 150.0
 const JUMP_VELOCITY = -400.0
 var facing_right = true
 
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -23,37 +24,40 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = direction * SPEED
-		animated_sprite.play("run")
+		#animation_player.play("run")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		animated_sprite.play("idle")
+		#animation_player.play("idle")
 
-	animated_sprite.flip_h = direction < 0
+	sprite_2d.scale.x = -1.0 if direction < 0 else 1.0
 	
 	match current_state:
 		State.STATE_FALLING:
 			if is_on_floor():
 				current_state = State.STATE_IDLE
-				animated_sprite.play("Idle")
+				animation_player.play("idle")
 		
 		State.STATE_IDLE:
 			if direction != 0:
 				current_state = State.STATE_RUNNING
-				animated_sprite.play("Run")
+				animation_player.play("run")
 			elif Input.is_action_just_pressed("ui_up"):
 				current_state = State.STATE_JUMPING
 				velocity.y = -JUMP_VELOCITY
-				animated_sprite.play("Jump")
+				animation_player.play("jump")
+			elif Input.is_action_just_pressed("attack"):
+				current_state = State.STATE_ATTACK
+				animation_player.play("attack")
 			elif not is_on_floor() and velocity.y > 0:
 				current_state = State.STATE_FALLING
-				animated_sprite.play("Fall")
+				animation_player.play("fall")
 		
 		State.STATE_JUMPING:
 			if velocity.y >= 0:
 				current_state = State.STATE_FALLING
-				animated_sprite.play("Fall")
+				animation_player.play("fall")
 			else:
-				animated_sprite.play("Jump")
+				animation_player.play("jump")
 		
 		State.STATE_RUNNING:
 			if direction > 0:
@@ -62,18 +66,30 @@ func _physics_process(delta: float) -> void:
 				facing_right = false
 			else:
 				current_state = State.STATE_IDLE
-				animated_sprite.play("Idle")
+				animation_player.play("idle")
 			
 			if not is_on_floor() and velocity.y > 0:
 				current_state = State.STATE_FALLING
-				animated_sprite.play("Fall")
-			elif Input.is_action_just_pressed("ui_jump"):
+				animation_player.play("fall")
+			elif Input.is_action_just_pressed("ui_up"):
 				current_state = State.STATE_JUMPING
 				velocity.y = -JUMP_VELOCITY
-				animated_sprite.play("Jump")
-		
+				animation_player.play("jump")
+			
+			if Input.is_action_just_pressed("attack"):
+				current_state = State.STATE_ATTACK
+				#animation_player.play("attack")
+				
+				
+		State.STATE_ATTACK:
+				animation_player.play("attack")
+				current_state = State.STATE_IDLE
+				#animation_player.play("idle")
+				
+
+				
 		_:
-			animated_sprite.play("Idle")
+			animation_player.play("idle")
 
 
 	move_and_slide()

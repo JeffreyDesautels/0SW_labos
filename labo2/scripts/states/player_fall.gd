@@ -8,10 +8,9 @@ var dir : float = 0.0
 
 func enter() -> void:
 	if not anim_player :
-		anim_player = player.get_node("AnimationPlayer")
+		anim_player = player.animation_player
 	anim_player.play("fall")
 	
-	#player.velocity.y = player.JUMP_VELOCITY
 
 func _input(event: InputEvent) -> void:
 	handle_inputs(event)
@@ -24,7 +23,7 @@ func handle_inputs(input_event: InputEvent) -> void :
 
 func update(delta : float) -> void:
 	if not anim_player :
-		anim_player = player.get_node("AnimationPlayer")
+		anim_player = player.animation_player
 
 	if dir != 0:
 		player.sprite_2d.flip_h = dir < 0

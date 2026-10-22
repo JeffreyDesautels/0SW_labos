@@ -6,7 +6,7 @@ var anim_player : AnimationPlayer
 
 func enter() -> void:
 	if not anim_player :
-		anim_player = player.get_node("AnimationPlayer")
+		anim_player = player.animation_player
 		
 	player.velocity.x = 0;
 	anim_player.play("attack")
@@ -19,7 +19,7 @@ func handle_inputs(input_event: InputEvent) -> void :
 
 func update(delta : float) -> void:
 	if not anim_player :
-		anim_player = player.get_node("AnimationPlayer")
+		anim_player = player.animation_player
 
 func physics_update(delta: float) -> void:
 	if not anim_player:

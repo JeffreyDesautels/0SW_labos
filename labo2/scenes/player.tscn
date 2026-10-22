@@ -2,6 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://dn2ir0xnhk6k5" path="res://assets/sprites/knight.png" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://bj1d2pskcd3ep" path="res://scripts/player.gd" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://dtc1b3nll7hum" path="res://scripts/states/state_machine.gd" id="3_qhqgy"]
+[ext_resource type="Script" uid="uid://bof4vloa788t0" path="res://scripts/states/player_idle.gd" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://e7443xj7fx5o" path="res://scripts/states/player_run.gd" id="5_qlg0r"]
+[ext_resource type="Script" uid="uid://vtiffr4r1kpy" path="res://scripts/states/player_jump.gd" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://comrhtuh5he1w" path="res://scripts/states/player_fall.gd" id="7_fjrip"]
+[ext_resource type="Script" uid="uid://jgelnq8svh4i" path="res://scripts/states/player_attack.gd" id="8_smehm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4flbx"]
 size = Vector2(10, 15)
@@ -40,7 +46,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 resource_name = "fall"
-length = 0.19999999999999998
+length = 0.2
 loop_mode = 1
 step = 0.05
 tracks/0/type = "value"
@@ -76,9 +82,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_tuyoq"]
 resource_name = "jump"
-length = 0.8
-loop_mode = 1
-step = 0.2
+length = 0.39999999999999997
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -86,15 +91,15 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [40, 41, 50, 40]
+"values": [40, 41, 42, 40]
 }
 
 [sub_resource type="Animation" id="Animation_g2els"]
 resource_name = "run"
-length = 1.5999999999999999
+length = 1.6
 loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
@@ -137,3 +142,32 @@ shape = SubResource("RectangleShape2D_4flbx")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1521364837]
 libraries/ = SubResource("AnimationLibrary_qhqgy")
 autoplay = &"idle"
+
+[node name="StateMachine" type="Node" parent="." unique_id=1853839994 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_qhqgy")
+initial_state = NodePath("PlayerIdle")
+
+[node name="PlayerIdle" type="Node" parent="StateMachine" unique_id=1013824120 node_paths=PackedStringArray("player")]
+script = ExtResource("4_dqkch")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://bof4vloa788t0"
+
+[node name="PlayerRun" type="Node" parent="StateMachine" unique_id=1746556231 node_paths=PackedStringArray("player")]
+script = ExtResource("5_qlg0r")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://e7443xj7fx5o"
+
+[node name="PlayerJump" type="Node" parent="StateMachine" unique_id=1602539239 node_paths=PackedStringArray("player")]
+script = ExtResource("6_tuyoq")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://vtiffr4r1kpy"
+
+[node name="PlayerFall" type="Node" parent="StateMachine" unique_id=2019494971 node_paths=PackedStringArray("player")]
+script = ExtResource("7_fjrip")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://comrhtuh5he1w"
+
+[node name="PlayerAttack" type="Node" parent="StateMachine" unique_id=732073894 node_paths=PackedStringArray("player")]
+script = ExtResource("8_smehm")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://jgelnq8svh4i"

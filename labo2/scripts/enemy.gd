@@ -1,4 +1,4 @@
-class_name Player
+class_name Enemy
 extends Node2D
 
 @export var speed : float = 60
@@ -6,7 +6,7 @@ extends Node2D
 @onready var detecteur_plancher : RayCast2D = $DetecteurPlancher
 @onready var detecteur_joueur : RayCast2D = $DetecteurJoueur
 @onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
-var player : Player
+var player : Enemy
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -36,7 +36,7 @@ func inverser_tout() -> void:
 	detecteur_plancher.target_position.x *= -1
 	detecteur_joueur.target_position.x *= -1
 	
-func set_player(player : Player) -> void:
+func set_player(player : Enemy) -> void:
 	self.player = player
 
 func handle_player() -> void:

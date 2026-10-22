@@ -1,8 +1,11 @@
 [gd_scene format=4 uid="uid://c766fl78o0cjk"]
 
+[ext_resource type="Texture2D" uid="uid://cpeia2qqbpbyl" path="res://layers/parallax-forest-back-trees.png" id="1_i7141"]
 [ext_resource type="PackedScene" uid="uid://co806t5p15df4" path="res://scenes/player.tscn" id="1_nnsk1"]
+[ext_resource type="Texture2D" uid="uid://bikyrdh2vbmiw" path="res://layers/parallax-forest-middle-trees.png" id="2_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://c0gkr0u00vmyq" path="res://assets/sprites/world_tileset.png" id="2_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://ti70ytyp8dt6" path="res://scenes/plateforme_mobile.tscn" id="3_4wyf3"]
+[ext_resource type="Texture2D" uid="uid://bf7uukglhk3sn" path="res://layers/parallax-forest-front-trees.png" id="3_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://ccgmja3qyuu5g" path="res://scenes/piece.tscn" id="4_k0juu"]
 [ext_resource type="PackedScene" uid="uid://bmoiyoc8o6jd5" path="res://scenes/kill_zone.tscn" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://mq7sepvtws3r" path="res://scenes/enemy.tscn" id="6_qfnet"]
@@ -155,6 +158,33 @@ sources/0 = SubResource("TileSetAtlasSource_4wyf3")
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_71j4m"]
 
 [node name="World" type="Node2D" unique_id=626891370]
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=1410105821]
+scroll_scale = Vector2(0.15, 0.15)
+repeat_size = Vector2(544, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1880925641]
+scale = Vector2(2, 2)
+texture = ExtResource("1_i7141")
+offset = Vector2(0, -20)
+
+[node name="Parallax2D2" type="Parallax2D" parent="." unique_id=43251451]
+scroll_scale = Vector2(0.45, 0.45)
+repeat_size = Vector2(544, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2" unique_id=2083944845]
+scale = Vector2(2, 2)
+texture = ExtResource("2_4mrxx")
+offset = Vector2(0, -20)
+
+[node name="Parallax2D3" type="Parallax2D" parent="." unique_id=491244446]
+scroll_scale = Vector2(0.85, 0.85)
+repeat_size = Vector2(544, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D3" unique_id=950226778]
+scale = Vector2(2, 2)
+texture = ExtResource("3_7r4gi")
+offset = Vector2(0, -20)
 
 [node name="Player" parent="." unique_id=394663604 instance=ExtResource("1_nnsk1")]
 position = Vector2(0, -11)
